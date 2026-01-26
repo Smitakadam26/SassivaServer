@@ -1,7 +1,6 @@
-// controllers/productController.js
+
 const Product = require("../models/Product");
 
-// ADD PRODUCT
 exports.addProduct = async (req, res) => {
   try {
 
@@ -35,12 +34,10 @@ exports.addProduct = async (req, res) => {
   }
 };
 
-// GET ALL PRODUCTS
-exports.getAllProducts = async (req, res) => {
+exports.getFilterProducts = async (req, res) => {
   try {
      const filter = {};
 
-    // 👇 THIS IS THE IMPORTANT PART
     if (req.query.category) {
       filter.category = req.query.category;
     }
@@ -50,13 +47,20 @@ exports.getAllProducts = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+exports.getProducts = async (req, res) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 });
+    
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
-
-// UPDATE PRODUCT
 exports.updateProduct = async (req, res) => {
   try {
     let updateData = req.body;
-
+console.log(req.body);
     if (req.files?.length) {
       updateData.images = req.files.map(file => file.path);
     }

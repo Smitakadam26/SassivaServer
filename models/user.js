@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     avatar: {
-      type: String // image URL
+      type: String 
     },
     role: {
       type: String,

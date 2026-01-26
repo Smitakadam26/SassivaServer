@@ -1,7 +1,6 @@
-// controllers/userController.js
+
 const User = require("../models/user");
 
-// GET PROFILE
 exports.getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -11,24 +10,31 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-// controllers/userController.js
+
 exports.updateProfile = async (req, res) => {
   try {
-    const { name, phone, avatar } = req.body;
+    const { name, phoneNumber, gender, location } = req.body;
+
+    const updatedData = {
+      name,
+      phoneNumber,
+      gender,
+      location,
+    };
+
+    if (req.file) {
+      updatedData.avatar = req.file.path;
+    }
 
     const user = await User.findByIdAndUpdate(
-      req.user._id,
-      {
-        name,
-        phone,
-        avatar,
-        gender
-      },
-      { new: true, runValidators: true }
-    ).select("-password");
+      req.user.id,
+      updatedData,
+      { new: true }
+    );
 
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ message: "Profile update failed" });
   }
 };
+
