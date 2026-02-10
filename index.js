@@ -10,8 +10,21 @@ const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const app = express();
 
-// middleware
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://fashion-eccomerce-web-client.vercel.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true 
+}));
 app.use(express.json());
 
 app.use("/", authRoutes);
@@ -22,7 +35,6 @@ app.get("/", (req, res) => {
   res.send("Server is running 🚀");
 });
 
-// mongodb connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
