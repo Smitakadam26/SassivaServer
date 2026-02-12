@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
-
   try {
     const { name, email, password, phoneNumber, gender, location } = req.body;
 
@@ -43,7 +42,6 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
 
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password required" });
@@ -64,7 +62,14 @@ const signin = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" },
     );
+    console.log(token)
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: false,
+  sameSite: "lax",
+});
 
+    
     res.json({
       user: {
         id: user._id,
