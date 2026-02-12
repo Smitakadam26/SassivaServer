@@ -42,6 +42,7 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log(req.body);
 
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password required" });
@@ -62,13 +63,12 @@ const signin = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1d" },
     );
-    console.log(token)
     res.cookie("token", token, {
-  httpOnly: true,
-  secure: false,
-  sameSite: "lax",
-});
-
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     
     res.json({
       user: {
