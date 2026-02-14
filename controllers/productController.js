@@ -3,7 +3,6 @@ const Product = require("../models/Product");
 
 exports.addProduct = async (req, res) => {
   try {
-
     if (!req.files || !req.files.length) {
       return res.status(400).json({ message: "Images are required" });
     }
