@@ -75,6 +75,14 @@ console.log(req.body);
     res.status(500).json({ message: err.message });
   }
 };
+exports.getFeaturedProducts = async (req, res) => {
+  try {
+    const featuredProducts = await Product.find({ featured: true });
+    res.status(200).json(featuredProducts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -86,13 +94,5 @@ exports.getProductById = async (req, res) => {
     res.status(200).json(product);
   } catch (error) {
     res.status(400).json({ message: "Invalid product ID" });
-  }
-};
-exports.getFeaturedProducts = async (req, res) => {
-  try {
-    const featuredProducts = await Product.find({ featured: true });
-    res.status(200).json(featuredProducts);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
   }
 };
