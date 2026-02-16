@@ -8,7 +8,7 @@ require("./config/db");
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://fashion-eccomerce-web-client.vercel.app"
+  "https://sassiva.vercel.app"
 ];
 app.use(express.json());
 app.use(cors({
