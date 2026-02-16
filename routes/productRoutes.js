@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/upload");
-const { addProduct, updateProduct, getProductById,getFilterProducts,getProducts } = require("../controllers/productController");
+const { addProduct, updateProduct, getProductById,getFilterProducts,getProducts,getFeaturedProducts } = require("../controllers/productController");
 
 const adminOnly = require("../middlewares/admin");
 const verifyToken = require("../middlewares/verifyToken");
@@ -21,7 +21,7 @@ router.get(
   "/:id",
   getProductById
 );
-
+router.get("/featured", getFeaturedProducts);
 router.put(
   "/:id",
   verifyToken,

@@ -15,8 +15,8 @@ exports.addProduct = async (req, res) => {
       fabric: req.body.fabric,
       color: req.body.color,
       size: req.body.size,
-
-      quantity: Number(req.body.quantity), // ✅ convert
+      featured:Boolean(req.body.featured),
+      quantity: Number(req.body.quantity),
       packof: Number(req.body.packof),
       price: Number(req.body.price),
 
@@ -28,7 +28,7 @@ exports.addProduct = async (req, res) => {
 
     res.status(201).json(product);
   } catch (err) {
-    console.error("ADD PRODUCT ERROR:", err); // 🔥 IMPORTANT
+    console.error("ADD PRODUCT ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -86,5 +86,13 @@ exports.getProductById = async (req, res) => {
     res.status(200).json(product);
   } catch (error) {
     res.status(400).json({ message: "Invalid product ID" });
+  }
+};
+exports.getFeaturedProducts = async (req, res) => {
+  try {
+    const featuredProducts = await Product.find({ featured: true });
+    res.status(200).json(featuredProducts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
