@@ -27,10 +27,11 @@ app.use(require("cookie-parser")());
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
-
+const wishlistRoutes = require("./routes/wishlistRoutes");
 app.use("/", authRoutes);
 app.use("/product", productRoutes);
 app.use("/users", userRoutes);
+app.use("/wishlist", wishlistRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server is running 🚀");
