@@ -54,49 +54,8 @@ exports.getProducts = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-exports.updateProduct = async (req, res) => {
-  try {
-    let updateData = req.body;
-console.log(req.body);
-    if (req.files?.length) {
-      updateData.images = req.files.map(file => file.path);
-    }
-
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      updateData,
-      { new: true }
-    );
-
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-exports.getFeaturedProducts = async (req, res) => {
-  try {
-    const featuredProducts = await Product.find({ featured: true });
-    res.status(200).json(featuredProducts);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-exports.getProductById = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    res.status(200).json(product);
-  } catch (error) {
-    res.status(400).json({ message: "Invalid product ID" });
-  }
-};
 exports.searchProducts = async(req,res)=>{
-
+ console.log("SEARCH CONTROLLER HIT");
     try{
 
         const query = req.query.q;
@@ -124,7 +83,7 @@ exports.searchProducts = async(req,res)=>{
                 $limit:20
             }
         ]);
-
+        console.log(products);
         res.json(products);
 
 
@@ -137,4 +96,46 @@ exports.searchProducts = async(req,res)=>{
     }
 
 };
+exports.updateProduct = async (req, res) => {
+  try {
+    let updateData = req.body;
+console.log(req.body);
+    if (req.files?.length) {
+      updateData.images = req.files.map(file => file.path);
+    }
+
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+exports.getFeaturedProducts = async (req, res) => {
+  try {
+    const featuredProducts = await Product.find({ featured: true });
+    res.status(200).json(featuredProducts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/*
+exports.getProductById = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(400).json({ message: "Invalid product ID" });
+  }
+};*/
 

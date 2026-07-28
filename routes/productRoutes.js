@@ -18,11 +18,12 @@ router.post(
 router.get("/", getFilterProducts);
 router.get("/All",getProducts);
 router.get("/featured", getFeaturedProducts);
-router.get(
+
+router.get("/search", searchProducts);
+/*router.get(
   "/:id",
   getProductById
-);
-router.get("/search", searchProducts);
+);*/
 router.put(
   "/:id",
   verifyToken,
