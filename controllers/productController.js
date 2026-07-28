@@ -1,6 +1,5 @@
 
 const Product = require("../models/Product");
-
 exports.addProduct = async (req, res) => {
   try {
     if (!req.files || !req.files.length) {
@@ -96,3 +95,47 @@ exports.getProductById = async (req, res) => {
     res.status(400).json({ message: "Invalid product ID" });
   }
 };
+exports.searchProducts = async(req,res)=>{
+
+    try{
+
+        const query = req.query.q;
+
+
+        const products = await Product.aggregate([
+            {
+                $search:{
+                    index:"product",
+
+                    text:{
+                        query:query,
+
+                        path:[
+                            "name",
+                            "brand",
+                            "category",
+                            "color"
+                        ]
+                    }
+                }
+            },
+
+            {
+                $limit:20
+            }
+        ]);
+
+
+        res.json(products);
+
+
+    }catch(error){
+
+        res.status(500).json({
+            message:error.message
+        });
+
+    }
+
+};
+

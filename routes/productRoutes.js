@@ -22,7 +22,7 @@ router.get(
   "/:id",
   getProductById
 );
-
+router.get("/search", searchProducts);
 router.put(
   "/:id",
   verifyToken,
