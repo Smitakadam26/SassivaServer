@@ -125,7 +125,6 @@ exports.searchProducts = async(req,res)=>{
             }
         ]);
 
-
         res.json(products);
 
 
