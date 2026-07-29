@@ -20,10 +20,10 @@ router.get("/All",getProducts);
 router.get("/featured", getFeaturedProducts);
 
 router.get("/search", searchProducts);
-/*router.get(
+router.get(
   "/:id",
   getProductById
-);*/
+);
 router.put(
   "/:id",
   verifyToken,

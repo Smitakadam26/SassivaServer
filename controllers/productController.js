@@ -124,7 +124,7 @@ exports.getFeaturedProducts = async (req, res) => {
   }
 };
 
-/*
+
 exports.getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -137,5 +137,5 @@ exports.getProductById = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: "Invalid product ID" });
   }
-};*/
+};
 
