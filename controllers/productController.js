@@ -55,7 +55,7 @@ exports.getProducts = async (req, res) => {
   }
 };
 exports.searchProducts = async(req,res)=>{
- console.log("SEARCH CONTROLLER HIT");
+ 
     try{
 
         const query = req.query.q;

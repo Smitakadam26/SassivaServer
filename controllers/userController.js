@@ -10,7 +10,22 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+exports.getUsers = async (req, res) => {
+  try {
+    console.log("User model:", User);
 
+    const allUsers = await User.find();
+    console.log("All users:", allUsers);
+
+    const users = await User.find({ role: "user" });
+    console.log("Filtered users:", users);
+
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
 exports.updateProfile = async (req, res) => {
   try {
     const { name, phoneNumber, gender, location } = req.body;
